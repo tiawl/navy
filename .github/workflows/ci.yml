@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - trunk
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: mlugg/setup-zig@v2
+    - name: Check if zig is canonical
+      shell: bash
+      run: |
+        zig fmt --check .
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: mlugg/setup-zig@v2
+    - name: Run tests
+      shell: bash
+      run: |
+        zig build test
